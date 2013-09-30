@@ -9,12 +9,14 @@ Designe Patterns Reading Club
   * Opening
   * Introduction to Design Patterns
   * Introduction to UML
-  * Adapter
+
 * Week #02
+  * Adapter
+  * Bridge
+
+* Week #03
   * Composite
   * Decorator
-* Week #03
-  * Bridge
   * Facade
 * Week #04
   * Flyweight
