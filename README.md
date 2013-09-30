@@ -4,7 +4,6 @@ dp-reading-club
 Designe Patterns Reading Club
 
 # Schedule
-## Structural Patterns
 * Week #01
   * Opening
   * Introduction to Design Patterns
@@ -15,39 +14,42 @@ Designe Patterns Reading Club
   * Bridge
 
 * Week #03
-  * Composite
+  * Facade (I think that put it into week #02 is better)
   * Decorator
-  * Facade
-* Week #04
-  * Flyweight
   * Proxy
 
-## Creational Patterns
-* Week #05
-  * TBD
-  * Builder
-* Week #06
+* Week #04
   * Abstract Factory
   * Factory Method
-* Week #07
-  * Singleton
+
+* Week #05
+  * Builder
   * Prototype
 
-## Behavioral Patterns
-* Week #08
+* Week #06
+  * Flyweight
+  * Singleton
+
+* Week #07
   * Template Method
   * Strategy
-* Week #09
-  * State
+
+* Week #08
+  * Iterator
+  * Composite
   * Interpreter
-* Week #10
-  * Observer
-  * Mediator
-* Week #11
-  * Iteratror
+
+* Week #09
   * Chain of Responsibility
-* Week #12
+  * State
+
+* Week #10
   * Command
   * Memento
-* Week #13
+
+* Week #11
+  * Observer
+  * Mediator
+
+* Week #12
   * Visitor
