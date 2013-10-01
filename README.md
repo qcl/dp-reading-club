@@ -12,9 +12,9 @@ Designe Patterns Reading Club
 * Week #02
   * Adapter
   * Bridge
+  * Façade
 
 * Week #03
-  * Facade (I think that put it into week #02 is better)
   * Decorator
   * Proxy
 
