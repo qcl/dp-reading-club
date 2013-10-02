@@ -5,5 +5,4 @@
 * Adapter Pattern @qcl
 * Bridge Pattern @qcl
 * Façade Pattern @qcl
-	
-* [Slide](://docs.google.com/presentation/d/1QSzI8yPhB8x6t4Zea-avr_BxJCfs598KUpbSaH0Yq3s/present#slide=id.p)
+* [Slide](http://docs.google.com/presentation/d/1QSzI8yPhB8x6t4Zea-avr_BxJCfs598KUpbSaH0Yq3s/present#slide=id.p)
