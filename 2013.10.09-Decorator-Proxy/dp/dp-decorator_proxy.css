@@ -1,0 +1,646 @@
+body, html {
+  height: 100%;
+}
+
+.code-block {
+  overflow: auto;
+  width: 100%;
+  height: 80%;
+  float: right;
+}
+
+.code-block pre {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.home > article {
+  position: absolute;
+  top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.home > article > .slide {
+  width: 940px;
+  padding: 0 10px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.home > article > section {
+  background: white;
+}
+
+section.deck-child-current .slide, section.deck-before .slide {
+  visibility: visible;
+}
+
+.on-slide-decorator #title, .on-slide-decorator-qcl #decorator, .on-slide-use-decorator #decorator-qcl, .on-slide-decorator-participant #use-decorator, .on-slide-decorator-consequence #decorator-participant, .on-slide-decorator-compare #decorator-consequence, .on-slide-decorator-implement #decorator-compare, .on-slide-proxy #decorator-implement, .on-slide-proxy-qcl #proxy, .on-slide-proxy-participant #proxy-qcl, .on-slide-proxy-example #proxy-participant, .on-slide-proxy-compare #proxy-example, .on-slide-proxy-implement #proxy-compare, .on-slide-reference #proxy-implement {
+  left: 0;
+  top: 0;
+  right: 0;
+}
+
+/* title */
+.csstransforms.csstransitions #title-1.deck-next, .csstransitions.csstransitions #title-2.deck-after, .csstransitions.csstransitions #title-2.deck-next {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #title-1.deck-before, .csstransforms.csstransitions #title-2.deck-previous, .csstransitions.csstransitions #title-2.deck-before {
+  -webkit-transform: translate3d(-300%, 0, 0);
+  -moz-transform: translate(-300%, 0);
+  -ms-transform: translate(-300%, 0);
+  -o-transform: translate(-300%, 0);
+  transform: translate3d(-300%, 0, 0);
+}
+
+.csstransforms.csstransitions #title-1 {
+  -webkit-transition: opacity 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out, -webkit-transform 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #title-2 {
+  -webkit-transition: opacity 200ms ease-in-out, -webkit-transform 400ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out, -moz-transform 400ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out, -ms-transform 400ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out, -o-transform 400ms ease-in-out;
+  transition: opacity 200ms ease-in-out, transform 400ms ease-in-out;
+}
+
+
+/* decorator */
+.csstransforms.csstransitions #decorator.deck-next, #decorator *.deck-next, #decorator *.deck-after, .on-slide-decorator-qcl #decorator, .on-slide-decorator-qcl-1 #decorator {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #decorator.deck-current, .csstransforms.csstransitions #decorator.deck-previous, .csstransforms.csstransitions #decorator.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #decorator {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #decorator * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+/* decorator-qcl */
+.csstransforms.csstransitions #decorator-qcl.deck-next {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #decorator-qcl.deck-current, .csstransforms.csstransitions #decorator-qcl.deck-previous, .csstransforms.csstransitions #decorator-qcl.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 400ms;
+  -moz-transition: opacity 200ms ease-in-out 400ms;
+  -ms-transition: opacity 200ms ease-in-out 400ms;
+  -o-transition: opacity 200ms ease-in-out 400ms;
+  transition: opacity 200ms ease-in-out 400ms;
+}
+
+#decorator-qcl img {
+  width: 80%;
+  height: 80%;
+  -webkit-transition: -webkit-transform 400ms ease-in-out;
+  -moz-transition: -webkit-transform 400ms ease-in-out;
+  -ms-transition: -webkit-transform 400ms ease-in-out;
+  -o-transition: -webkit-transform 400ms ease-in-out;
+  transition: -webkit-transform 400ms ease-in-out;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+#decorator-qcl img:nth-child(2) {
+  top: 0;
+}
+
+#decorator-qcl img:nth-child(3) {
+  top: -80%;
+}
+
+#decorator-qcl img:nth-child(4) {
+  top: -160%;
+}
+
+.csstransforms.csstransitions #decorator-qcl img.deck-next, .csstransforms.csstransitions #decorator-qcl img.deck-after {
+  -webkit-transform: translate3d(-500%, 0, 0);
+  -moz-transform: translate(-500%, 0);
+  -ms-transform: translate(-500%, 0);
+  -o-transform: translate(-500%, 0);
+  transform: translate3d(-500%, 0, 0);
+}
+
+.csstransforms.csstransitions #decorator-qcl img.deck-previous, .csstransforms.csstransitions #decorator-qcl img.deck-before {
+  -webkit-transform: translate3d(500%, 0, 0);
+  -moz-transform: translate(500%, 0);
+  -ms-transform: translate(500%, 0);
+  -o-transform: translate(500%, 0);
+  transform: translate3d(500%, 0, 0);
+}
+
+.csstransforms.csstransitions img#decorator-qcl-3.deck-previous, .csstransforms.csstransitions img#decorator-qcl-3.deck-before {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.csstransforms.csstransitions #decorator-qcl-4.deck-next, .csstransforms.csstransitions #decorator-qcl-4.deck-after {
+  -webkit-transform: scale(0, 0);
+  -moz-transform: scale(0, 0);
+  -ms-transform: scale(0, 0);
+  -o-transform: scale(0, 0);
+  transform: scale(0, 0);
+}
+
+#decorator-qcl-4 {
+  position: absolute;
+  top: 90%;
+  left: 70%;
+  color: red;
+  -webkit-transition: -webkit-transform 200ms ease-in-out;
+  -moz-transition: -webkit-transform 200ms ease-in-out;
+  -ms-transition: -webkit-transform 200ms ease-in-out;
+  -o-transition: -webkit-transform 200ms ease-in-out;
+  transition: -webkit-transform 200ms ease-in-out;
+}
+
+#decorator-qcl-4.deck-previous, #decorator-qck-4.deck-before {
+  display: none;
+}
+
+.on-slide-use-decorator #decorator-qcl img {
+  display: none;
+}
+
+.csstransforms.csstransitions article.on-slide-decorator-qcl-4, .csstransforms.csstransitions article.on-slide-use-decorator {
+  
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+  
+/*
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+*/
+  -webkit-transition: -webkit-transform 700ms;
+  -moz-transition: -webkit-transform 700ms;
+  -ms-transition: -webkit-transform 700ms;
+  -o-transition: -webkit-transform 700ms;
+  transition: -webkit-transform 700ms;
+}
+
+.csstransforms.csstransitions .on-slide-use-decorator #decorator-qcl {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.csstransforms.csstransitions article.on-slide-use-decorator {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+/* use-decorator */
+#use-decorator img {
+  width: 100%;
+}
+
+.csstransforms.csstransitions #use-decorator.deck-next, .csstransforms.csstransitions #use-decorator.deck-current {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+
+  left: 0;
+  top: 0;
+  right: 0;
+  visibility: show;
+}
+
+.csstransforms.csstransitions #use-decorator.deck-next {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+
+.csstransforms.csstransitions #use-decorator {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-decorator-participant #use-decorator, .on-slide-decorator-participant-1 #use-decorator {
+  opacity: 0;
+}
+
+/* decorator-participant */
+.csstransforms.csstransitions #decorator-participant.deck-next, #decorator-participant *.deck-next, #decorator-participant *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #decorator-participant.deck-current, .csstransforms.csstransitions #decorator-participant.deck-previous, .csstransforms.csstransitions #decorator-participant.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #decorator-participant {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #decorator-participant * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-decorator-consequence #decorator-participant, .on-slide-decorator-consequence-1 #decorator-participant {
+  opacity: 0;
+}
+
+/* decorator-consequence */
+.csstransforms.csstransitions #decorator-consequence.deck-next, #decorator-consequence *.deck-next, #decorator-consequence *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #decorator-consequence.deck-current, .csstransforms.csstransitions #decorator-consequence.deck-previous, .csstransforms.csstransitions #decorator-consequence.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #decorator-consequence {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #decorator-consequence * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-decorator-compare #decorator-consequence, .on-slide-decorator-compare-1 #decorator-consequence {
+  opacity: 0;
+}
+
+/* decorator-compare */
+.csstransforms.csstransitions #decorator-compare.deck-next, #decorator-compare *.deck-next, #decorator-compare *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #decorator-compare.deck-current, .csstransforms.csstransitions #decorator-compare.deck-previous, .csstransforms.csstransitions #decorator-compare.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #decorator-compare {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #decorator-compare * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-decorator-implement #decorator-compare, .on-slide-proxy #decorator-compare {
+  opacity: 0;
+}
+
+/* decorator-implement */
+.csstransforms.csstransitions #decorator-implement.deck-current, .csstransforms.csstransitions #decorator-implement.deck-previous, .csstransforms.csstransitions #decorator-implement.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #decorator-implement {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy #decorator-implement, .on-slide-proxy-1 #decorator-implement {
+  opacity: 0;
+}
+
+/* proxy */
+.csstransforms.csstransitions #proxy.deck-next, #proxy *.deck-next, #proxy *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #proxy.deck-current, .csstransforms.csstransitions #proxy.deck-previous, .csstransforms.csstransitions #proxy.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #proxy * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy-qcl #proxy, .on-slide-proxy-qcl-1 #proxy {
+  opacity: 0;
+}
+
+/* proxy-qcl */
+#proxy-qcl img {
+  height: 80%;
+  -webkit-transition: -webkit-transform 400ms ease-in-out;
+  -moz-transition: -webkit-transform 400ms ease-in-out;
+  -ms-transition: -webkit-transform 400ms ease-in-out;
+  -o-transition: -webkit-transform 400ms ease-in-out;
+  transition: -webkit-transform 400ms ease-in-out;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+#proxy-qcl img:nth-child(2) {
+  top: 0;
+}
+
+#proxy-qcl img:nth-child(3) {
+  top: -80%;
+}
+
+#proxy-qcl img:nth-child(4) {
+  top: -160%;
+}
+
+.csstransforms.csstransitions #proxy-qcl img.deck-next, .csstransforms.csstransitions #proxy-qcl img.deck-after {
+  -webkit-transform: translate3d(-500%, 0, 0);
+  -moz-transform: translate(-500%, 0);
+  -ms-transform: translate(-500%, 0);
+  -o-transform: translate(-500%, 0);
+  transform: translate3d(-500%, 0, 0);
+}
+
+.csstransforms.csstransitions #proxy-qcl img.deck-previous, .csstransforms.csstransitions #proxy-qcl img.deck-before {
+  -webkit-transform: translate3d(500%, 0, 0);
+  -moz-transform: translate(500%, 0);
+  -ms-transform: translate(500%, 0);
+  -o-transform: translate(500%, 0);
+  transform: translate3d(500%, 0, 0);
+}
+
+.csstransforms.csstransitions #proxy-qcl.deck-current, .csstransforms.csstransitions #proxy-qcl.deck-previous, .csstransforms.csstransitions #proxy-qcl.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy-qcl {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy-participant #proxy-qcl, .on-slide-proxy-participant-1 #proxy-qcl {
+  opacity: 0;
+}
+
+/* proxy-participant */
+.csstransforms.csstransitions #proxy-participant.deck-next, #proxy-participant *.deck-next, #proxy-participant *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #proxy-participant.deck-current, .csstransforms.csstransitions #proxy-participant.deck-previous, .csstransforms.csstransitions #proxy-participant.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy-participant {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #proxy-participant * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy-example #proxy-participant, .on-slide-proxy-example-1 #proxy-participant {
+  opacity: 0;
+}
+
+/* proxy-example */
+.csstransforms.csstransitions #proxy-example.deck-next, #proxy-example *.deck-next, #proxy-example *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #proxy-example.deck-current, .csstransforms.csstransitions #proxy-example.deck-previous, .csstransforms.csstransitions #proxy-example.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy-example {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #proxy-example * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy-compare #proxy-example, .on-slide-proxy-compare-1 #proxy-example {
+  opacity: 0;
+}
+
+/* proxy-compare */
+.csstransforms.csstransitions #proxy-compare.deck-next, #proxy-compare *.deck-next, #proxy-compare *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #proxy-compare.deck-current, .csstransforms.csstransitions #proxy-compare.deck-previous, .csstransforms.csstransitions #proxy-compare.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy-compare {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #proxy-compare * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-proxy-implement #proxy-compare, .on-slide-reference #proxy-compare {
+  opacity: 0;
+}
+
+/* proxy-implement */
+.csstransforms.csstransitions #proxy-implement.deck-next, #proxy-implement *.deck-next, #proxy-implement *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #proxy-implement.deck-current, .csstransforms.csstransitions #proxy-implement.deck-previous, .csstransforms.csstransitions #proxy-implement.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #proxy-implement {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #proxy-implement * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.on-slide-reference #proxy-implement, .on-slide-reference-1 #proxy-implement {
+  opacity: 0;
+}
+
+/* reference */
+.csstransforms.csstransitions #reference.deck-next, #reference *.deck-next, #reference *.deck-after {
+  opacity: 0;
+}
+
+.csstransforms.csstransitions #reference.deck-current, .csstransforms.csstransitions #reference.deck-previous, .csstransforms.csstransitions #reference.deck-next {
+  -webkit-transition: opacity 200ms ease-in-out 300ms;
+  -moz-transition: opacity 200ms ease-in-out 300ms;
+  -ms-transition: opacity 200ms ease-in-out 300ms;
+  -o-transition: opacity 200ms ease-in-out 300ms;
+  transition: opacity 200ms ease-in-out 300ms;
+}
+
+.csstransforms.csstransitions #reference {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
+.csstransforms.csstransitions #reference * {
+  -webkit-transition: opacity 200ms ease-in-out;
+  -moz-transition: opacity 200ms ease-in-out;
+  -ms-transition: opacity 200ms ease-in-out;
+  -o-transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out;
+}
+
