@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="../deck/core/deck.core.css"></link>
+  <link rel="stylesheet" href="dp-decorator_proxy.css"></link>
+  <link rel="stylesheet" href="../snippet/jquery.snippet.min.css"></link>
+  <script src="../deck/modernizr.custom.js"></script>
+</head>
+<body class="home">
+  <article>
+    <section class="slide" id="title">
+      <h2 class="slide" id="title-1">Design Pattern</h2>
+      <h1 class="slide" id="title-2">Decorator & Proxy</h1>
+    </section>
+    <section class="slide" id="decorator">
+      <h2>Decorator</h2>
+      <h3 class="slide" id="decorator-1">動機</h3>
+      <ul>
+        <li class="slide" id="decorator-2"><h4>當一個物件的屬性參數超多選擇的時候</h4></li>
+        <li class="slide" id="decorator-3"><h4>或者屬性只有特定作用的時候</h4></li>
+        <li class="slide" id="decorator-4"><h4>用繼承會生太多class</h4></li>
+      </ul>
+    </section>
+    <section class="slide" id="decorator-qcl">
+      <h2>QCL的野望</h2>
+      <img class="slide" id="decorator-qcl-1" src="decorator-qcl-1.png"></img>
+      <img class="slide" id="decorator-qcl-2" src="decorator-qcl-2.png"></img>
+      <img class="slide" id="decorator-qcl-3" src="decorator-qcl-3.png"></img>
+      <h3 class="slide" id="decorator-qcl-4">革命尚未成功</h3>
+    </section>
+    <section class="slide" id="use-decorator">
+      <h2>使用Decorator</h2>
+      <img src="use-decorator.png"></img>
+    </section>
+    <section class="slide" id="decorator-participant">
+      <h2>角色們</h2>
+      <ul class="slide" id="decorator-participant-1">
+        <li><h4>Component(GirlFriend)</h4></li>
+        <li class="slide" id="decorator-participant-2"><h4>Concrete Component(氣質/貼心GirlFriend)</h4></li>
+        <li class="slide" id="decorator-participant-3"><h4>Decorator(衣著)</h4></li>
+        <li class="slide" id="decorator-participant-4"><h4>Concrete Decorator(長裙/短裙/黑褲襪)</h4></li>
+      </ul>
+    </section>
+    <section class="slide" id="decorator-consequence">
+      <h2>影響</h2>
+      <ul class="slide" id="decorator-consequence-1">
+        <li><h4>比繼承彈性許多</h4></li>
+        <li class="slide" id="decorator-consequence-2"><h4>避免很多層的繼承</h4></li>
+        <li class="slide" id="decorator-consequence-3"><h4>Decorator和擁有者沒有主從關聯</h4></li>
+        <li class="slide" id="decorator-consequence-4"><h4>很多小物件</h4></li>
+      </ul>
+    </section>
+    <section class="slide" id="decorator-compare">
+      <h2>相關DP</h2>
+      <ul class="slide" id="decorator-compare-1">
+        <li>
+          <h4>Adapter</h4>
+          <h5>A decorator is different from an adapter in that a decorator only changes an object's responsibilities, not its interface; an adapter will give an object a completely new interface.</h5>
+        </li>
+        <li>
+          <h4>Composite</h4>
+          <h5>A decorator can be viewed as a degenerate composite with only one component. However, a decorator adds additional responsibilities—it isn't intended for object aggregation.</h5>
+        </li>
+        <li>
+          <h4>Strategy</h4>
+          <h5>A decorator lets you change the skin of an object; a strategy lets you change the guts. These are two alternative ways of changing an object.</h5>
+        </li>
+      </ul>
+    </section>
+    <section class="slide" id="decorator-implement">
+    <h2>Implement</h2>
+    <div class="code-block">
+      <pre>
+/* Interface */
+var GirlFriend = (function() {
+  function GirlFriendSetup(imp, 衣著) {
+    this._imp = imp;
+    this.衣著 = 衣著;
+    delete this.GirlFriendSetup;
+  }
+  function 對話() {
+    this._imp.對話實作();
+  };
+  function 呵呵() {
+    this._imp.呵呵實作();
+  };
+  function 自拍() {
+    alert(this.衣著.外觀());
+  }
+  return function() {
+    // define public attribute
+    this.對話 = 對話;
+    this.呵呵 = 呵呵;
+    this.自拍 = 自拍;
+    this.GirlFriendSetup = GirlFriendSetup;
+    return this;
+  };
+})();
+
+var GirlFriendImp = (function() {
+  function GirlFriendImpSetup() {
+    delete this.GirlFriendImpSetup;
+  }
+  function 對話實作() {
+    throw new Error("我不會對話QAQ").stack;
+  };
+  function 呵呵實作() {
+    throw new Error("我不會呵呵QAQ").stack;
+  };
+  return function() {
+    // define public attribute
+    this.對話實作 = 對話實作;
+    this.呵呵實作 = 呵呵實作;
+    this.GirlFriendImpSetup = GirlFriendImpSetup;
+    return this;
+  };
+})();
+
+var 服飾 = (function() {
+  function 服飾Setup(描述) {
+    this.描述 = 描述;
+    delete this.服飾Setup;
+  }
+  function 外觀() {
+    return this.描述;
+  }
+  return function() {
+    // define public attribute
+    this.外觀 = 外觀;
+    this.服飾Setup = 服飾Setup;
+    return this;
+  }
+})();
+
+/* Implement */
+var 馬尾GirlFriend = function() {
+  var fn = this;
+  fn.GirlFriendImpSetup();
+
+  function 甩馬尾() {
+    alert("甩馬尾");
+  };
+  function 馬尾對話() {
+    alert("馬尾安安");
+  };
+  function 馬尾呵呵() {
+    alert("馬尾呵呵");
+  };
+  function 對話實作() {
+    甩馬尾();
+    馬尾對話();
+  };
+  function 呵呵實作() {
+    甩馬尾();
+    馬尾呵呵();
+  };
+
+  fn.對話實作 = 對話實作;
+  fn.呵呵實作 = 呵呵實作;
+};
+GirlFriendImp.call(馬尾GirlFriend.prototype);
+
+var 長直髮GirlFriend = function() {
+  var fn = this;
+  fn.GirlFriendImpSetup();
+   function 對話實作() {
+    alert("安安");
+  };
+  function 呵呵實作() {
+    alert("呵呵");
+  };
+
+  fn.對話實作 = 對話實作;
+  fn.呵呵實作 = 呵呵實作;
+};
+GirlFriendImp.call(長直髮GirlFriend.prototype);
+
+var 氣質GirlFriend = function(imp, 衣著) {
+  var fn = this;
+  fn.GirlFriendSetup(imp, 衣著);
+   function 發卡() {
+    fn.呵呵();
+    alert("掰掰囉");
+  }
+  fn.發卡 = 發卡;
+};
+GirlFriend.call(氣質GirlFriend.prototype);
+
+var 貼心GirlFriend = function(imp, 衣著) {
+  var fn = this;
+  fn.GirlFriendSetup(imp, 衣著);
+
+   function 提醒睡覺() {
+    fn.呵呵();
+    fn.對話();
+    alert("睡覺囉");
+  }
+  fn.提醒睡覺 = 提醒睡覺;
+};
+GirlFriend.call(貼心GirlFriend.prototype);
+
+var 長裙 = function() {
+  var fn = this;
+  fn.服飾Setup("長裙");
+}
+服飾.call(長裙.prototype);
+
+var 短裙 = function() {
+  var fn = this;
+  fn.服飾Setup("短裙");
+}
+服飾.call(短裙.prototype);
+
+var 褲襪 = function(顏色) {
+  var fn = this;
+  fn.服飾Setup([顏色, "褲襪"].join(""));
+  fn.顏色 = 顏色;
+}
+服飾.call(褲襪.prototype);
+
+var decorator = function() {
+  GirlFriend1 = new 氣質GirlFriend(new 馬尾GirlFriend(), new 長裙());
+  console.log(GirlFriend1);
+  GirlFriend1.發卡();
+  GirlFriend1.自拍();
+
+  GirlFriend2 = new 貼心GirlFriend(new 長直髮GirlFriend(), new 短裙());
+  console.log(GirlFriend2);
+  GirlFriend2.提醒睡覺();
+  GirlFriend2.自拍();
+}
+      </pre>
+    </div>
+    </section>
+    <section class="slide" id="proxy">
+      <h2>Proxy</h2>
+      <h3 class="slide" id="proxy-1">種類</h3>
+      <ol>
+        <li class="slide" id="proxy-2"><h4>遠端代理（Remote）：代理遠端程時執行，例如我們可以透過WebService的WSDL定義產生中介檔的函式庫，透過這個函式庫就可以存取WebService。</h4></li>
+        <li class="slide" id="proxy-3"><h4>虛擬代理（Virtual）：將需要秏費大量時間或是複雜的實體，利用代理模式的物件代替。</h4></li>
+        <li class="slide" id="proxy-4"><h4>安全代理（Protect or Access）：控制物件存取時的許可權。</h4></li>
+        <li class="slide" id="proxy-5"><h4>智慧參考（Smart Reference）：提供比原有物件更多的服務。</h4></li>
+      </ol>
+    </section>
+    <section class="slide" id="proxy-qcl">
+      <h2>還是拿QCL當例子吧</h2>
+      <img class="slide" id="proxy-qcl-1" src="proxy-qcl-1.png"></img>
+      <img class="slide" id="proxy-qcl-2" src="proxy-qcl-2.png"></img>
+      <img class="slide" id="proxy-qcl-3" src="proxy-qcl-3.png"></img>
+    </section>
+    <section class="slide" id="proxy-participant">
+      <h2>角色們</h2>
+      <ul class="slide" id="proxy-participant-1">
+        <li><h4>Proxy</h4></li>
+        <li><h4>Subject(Proxy Interface)</h4></li>
+        <li><h4>RealSubject(GirlFriend)</h4></li>
+      </ul>
+    </section>
+    <section class="slide" id="proxy-example">
+      <h2>實例</h2>
+      <ul class="slide" id="proxy-example-1">
+        <li><h4>RPC Proxy</h4></li>
+        <li><h4>Copy-on-Write</h4></li>
+        <li><h4>Smart Pointer</h4></li>
+      </ul>
+    </section>
+    <section class="slide" id="proxy-compare">
+      <h2>相關DP</h2>
+      <ul class="slide" id="proxy-compare-1">
+        <li>
+          <h4>Adapter</h4>
+          <h5>An adapter provides a different interface to the object it adapts. In contrast, a proxy provides the same interface as its subject. However, a proxy used for access protection might refuse to perform an operation that the subject will perform, so its interface may be effectively a subset of the subject's.</h5>
+        </li>
+        <li>
+          <h4>Decorator</h4>
+          <h5>Although decorators can have similar implementations as proxies, decorators have a different purpose. A decorator adds one or more responsibilities to an object, whereas a proxy controls access to an object.</h5>
+        </li>
+      </ul>
+    </section>
+    <section class="slide" id="proxy-implement">
+    <h2>Implement</h2>
+    <div class="code-block">
+      <pre>
+/* util */
+function sleep(w){var t=new Date;while(new Date-t&lt;w);}
+
+/* Interface */
+var Reciever = (function() {
+  function 收情書() {
+    console.log("已收到");
+  }
+  return function() {
+    this.收情書 = 收情書;
+    return this;
+  };
+})();
+
+/* Implement */
+var Boy = function() {
+  var fn = this;
+
+  function 遞情書(目標) {
+    console.log("已送出");
+    目標.收情書();
+  };
+  function 寫情書() {
+    console.log("開始寫");
+    sleep(5000);
+    console.log("寫完了");
+  };
+  fn.遞情書 = 遞情書;
+  fn.寫情書 = 寫情書;
+}
+
+var Girl = function() {
+  var fn = this;
+
+  /* need time to find a girl */
+  sleep(3000);
+};
+Reciever.call(Girl.prototype);
+
+var BoyProxy = function() {
+  var fn = this;
+  setTimeout(function() { fn.girl = new Girl(); }, 0);
+
+  function 收情書() {
+    if (fn.girl) {
+      console.log("代收已送出");
+      fn.girl.收情書();
+    } else {
+      console.log("還沒找到女孩");
+    }
+  }
+  fn.收情書 = 收情書;
+}
+Reciever.call(BoyProxy.prototype);
+
+var proxy = function() {
+  /* world 1 */
+  console.log("world 1 start: " + new Date);
+  QCL1 = new Boy();
+  Girl1 = new Girl();
+
+  QCL1.寫情書();
+  QCL1.遞情書(Girl1);
+  console.log("world 1 end: " + new Date);
+
+  /* world 2 */
+  console.log("world 2 start: " + new Date);
+  QCL2 = new Boy();
+  好友1 = new BoyProxy();
+
+  QCL2.寫情書();
+  QCL2.遞情書(好友1);
+  console.log("world 2 end: " + new Date);
+};
+      </pre>
+    </div>
+    </section>
+    <section class="slide" id="reference">
+    <h2>Reference</h2>
+    <h3>GOF</h3>
+    <h3>良葛格的學習筆記</h3>
+    <h3>http://www.dotblogs.com.tw/alonstar/archive/2011/05/13/25025.aspx</h3>
+    </section>
+  </article>
+
+  <script src="../deck/jquery-1.7.2.min.js"></script>
+  <script src="../deck/core/deck.core.js"></script>
+  <script src="../deck/extensions/hash/deck.hash.js"></script>
+  <script src="../deck/extensions/status/deck.status.js"></script>
+  <script src="../snippet/jquery.snippet.min.js"></script>
+  <script src="dp-decorator_proxy.js"></script>
+</body>
+</html>
