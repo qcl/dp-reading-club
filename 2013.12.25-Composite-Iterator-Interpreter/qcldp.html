@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html class="remark-container"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>(worship)</title>
+    <link rel="stylesheet" href="./res/style.css">
+    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&amp;delayStartupUntil=configured" type="text/javascript"></script>
+  </head>
+  <body class="remark-container">
+    <textarea id="source" style="display: none;">name: inverse
+class: inverse, center, middle, front-page
+layout: true
+---
+.large[.left[Design Patterns:]]
+# Composite, Iterator, Interpreter
+.left[[suhorng](https://github.com/suhorng)]
+.footnote[@QCL Design Pattern Club Week 8]
+---
+layout: false
+# Composite: Recursive Data Type
+- An example
+
+![tree](./res/comp-naive.png)
+
+* $\text{Composite}\to\text{insert}$
+* $\text{Composite}\to\text{lookup}$
+* $\text{Leaf}\to\text{lookup}$
+---
+# Composite: Recursive Data Type
+- Making them have the same type
+
+![tree](./res/comp-subtype.png)
+
+* ~~Composite~~ $\text{Component}\to\text{insert}$
+* ~~Composite~~ $\text{Component}\to\text{lookup}$
+* ~~Leaf~~ ~~&rightarrow;~~ ~~lookup~~
+---
+# Algebraic Data Type .small[Separating Our Concern]
+- The *key* idea: recursive data type
+    ```haskell
+    data Component = Leaf | Composite Component Int Component
+    ```
+    * `Component` is a type with two variants:
+1. $\text{Leaf}:\text{Component}$, having no children
+1. $\text{Composite}:\text{Component}\times\text{Int}\times\text{Component}\to\text{Component}$; recursion occurs.
+
+--
+- operations
+    ```haskell
+    insert :: Int &rightarrow; Component &rightarrow; Component
+    insert n Leaf = Composite Leaf n Leaf
+    insert n (Composite leftChild n' rightChild)
+      | n < n'  = Composite (insert n leftChild) n' rightChild
+      | n > n'  = Composite leftChild n' (insert n rightChild)
+      | n == n' = Composite leftChild n' rightChild
+    ```
+---
+# Implementaion in OO Settings
+- We have (subtype) polymorphism, induced by inheritance
+
+```scala
+abstract class BST { def lookup(n: Int): Boolean }
+
+case object Leaf extends BST {
+  def lookup(n: Int): Boolean = false
+}
+
+case class Node(lhs: BST, value: Int, rhs: BST) extends BST {
+  def lookup(n: Int): Boolean =
+    if (n < value) lhs.lookup(n)
+    else if (n > value) rhs.lookup(n)
+    else true
+}
+```
+---
+# Implementaion in OO Settings
+- The opposite also works
+- We will come back to this later
+
+```scala
+def insert(bst: BST, n: Int): BST = bst match {
+  case Leaf => new Node(Leaf, n, Leaf)
+  case Node(lhs, value, rhs) =>
+    if (n < value)      new Node(insert(lhs, n), value, rhs)
+    else if (n > value) new Node(lhs, value, insert(rhs, n))
+    else                new Node(lhs, value, rhs)
+}
+
+def main(args: Array[String]): Unit = {
+  val init = new Node(Leaf, 5, Leaf)
+  val t1 = insert(init, 1)
+  val t2 = insert(t1, 6)
+  val t3 = insert(t2, 3)
+  println(t3)
+  println("lookup 3:" + t3.lookup(3))
+  println("lookup 6:" + t3.lookup(6))
+  println("lookup 2:" + t3.lookup(2))
+}
+```
+---
+# Implementaion in OO Settings
+- C++/Java: the usual overriding tecnhique
+
+```cpp
+class Expr {
+public:
+  /* ... */
+  virtual ~Expr() {}
+  virtual shared_ptr<Value> eval(const Context<Value>&) const;
+};
+
+class Var : public Expr { /* override `eval` */ };
+class Lam : public Expr { /* override `eval` */ };
+class Ap  : public Expr { /* override `eval` */ };
+
+Expr* e =
+  new Ap(
+    new Lam("x", new Var("x")),
+    new Val(new IntValue(5)));
+shared_ptr<Value> v = e->eval({});
+```
+--
+
+- Structure? Participants? Collaborations?
+--
+
+    * see **GoF** `:D`
+---
+# Remark: Recursion
+- An inspiring abstraction
+
+    * **factor** the recursion out
+    * recursion as a **fixed-point** to an equation
+
+```haskell
+data Component = Leaf | Composite Component Int Component
+```
+---
+# Remark: Recursion
+- An inspiring abstraction
+
+    * **factor** the recursion out
+    * recursion as a **fixed-point** to an equation
+
+```haskell
+data Component = ... Component ...
+```
+---
+# Remark: Recursion
+- An inspiring abstraction
+
+    * **factor** the recursion out
+    * recursion as a **fixed-point** to an equation
+
+```haskell
+data Component = In (ComponentF Component)
+
+data ComponentF x = Leaf | Composite x Int x
+
+
+
+ex1 = In (Composite (In Leaf) 5 (In Leaf))
+ex2 = In (Composite (In Leaf) 5 (In (Composite (In Leaf) 8 (In Leaf))))
+```
+---
+# Remark: Recursion
+- An inspiring abstraction
+
+    * **factor** the recursion out
+    * recursion as a **fixed-point** to an equation
+
+```haskell
+type Component = Fix ComponentF
+
+data ComponentF x = Leaf | Composite x Int x
+
+data Fix f = In (f (Fix f)) -- fixed point
+
+ex1 = In (Composite (In Leaf) 5 (In Leaf))
+ex2 = In (Composite (In Leaf) 5 (In (Composite (In Leaf) 8 (In Leaf))))
+```
+--
+
+- $\text{Component}\,X = \mathbf{1} + X\times\text{Int}\times X\;\;$ ($\mathbf{1}$ for $\text{Leaf}$)
+
+--
+- $T := \text{Fix}\,F$ is such that $F\;T = T$; 
+--
+$T = F\;T = F\;(F\;T)=\cdots$
+
+--
+$T = T\times\text{Int}\times T = \mathbf{1}\times\text{Int}\times T = \cdots = \mathbf{1}\times\text{Int}\times(\mathbf{1}\times\text{Int}\times\mathbf{1})$
+---
+# Functors
+- And it naturally induces two operations
+
+- $\text{fmap}:(A\to B)\to(F\,A\to F\,B)$
+
+    applying operation to **each** element in the data type
+
+    ```haskell
+    xs = map (*2) [1,2,3] -- xs = [2,4,6]
+    ```
+
+- $(\\!|\,\\_\,|\\!):(F\,A\to A)\to (T\to A)\;\;$ (i.e. $\text{fold}$)
+
+    calculation using elements in the data type
+
+    ```haskell
+    n = foldr (+) 0 [1,2,3] -- n = 1+(2+(3+0))
+    ```
+---
+# Each: `map` and `fold`
+- $\text{map}$
+
+    * `for_each`, `for s in list`, `for (String s : strs)` ...
+
+    ```cpp
+    for_each(vec.begin(), vec.end(), [](int& n) { n *= 2; });
+    for (int& n : vec) n *= 2; /* or this */
+    ```
+    ```python
+    for i in [1,2,3]:
+        print i
+    ```
+    ```java
+    for (String s : lines)
+        System.out.println(s);
+    ```
+    ```scala
+    var sum = 0
+    val Unit = List(1,2,3).foreach((x:Int) => sum = sum + x)
+    ```
+
+- $\text{fold}$: `foldr`, `reduce`, ...
+
+---
+# Iterator: Accessing Collection Iteratively
+- iterators we are familiar with
+
+```cpp
+for (auto it = vec.begin(); it != vec.end(); ++it)
+  *it = (*it) * 3;
+```
+
+--
+
+- two sorts, both do iterate through the collection:
+
+    * one we can't control how it iterates
+    * and one we can
+
+--
+
+- some of them can be categorized:
+
+\\[\text{Input}/\text{Output} \supset \text{Forward} \supset \text{Bidirectional} \supset \text{Random access}\\]
+---
+# Iterator: Accessing Collection Iteratively
+- Structure, by **GoF**
+![iterator structure](./res/itera040.gif)
+---
+# Context of a Traversal
+- If we insist on immutability?
+
+    * The first case is simple and natural
+    * The second case: **context** with a hole
+
+--
+
+- list **zipper**
+
+```haskell
+data ListIter a = Iter [a] [a] -- zipper
+
+isDone (Iter _ []) = True
+isDone (Iter _ _)  = False
+
+deref (Iter _ (a:_)) = a
+next  (Iter before (a:rest)) = Iter (a:before) rest
+prev  (Iter (a:before) rest) = Iter before (a:rest)
+```
+
+--
+
+- magic: $\text{Zipper}$s from *differentiation*
+
+\\[F X = \mathbf{1}+X\times\text{Int}\times X \Rightarrow \partial_X (F X) \cong \mathbf{2}\times\text{Int}\times X\\]
+---
+# Python's Generator, Coroutine, and Delimited Continuation
+- generators are iterators (that can only go forward)
+
+```python
+gen_cnt = 0 # only for demonstration
+def gen(n):
+  global gen_cnt
+  i = 0
+  while True:
+    i = i + 1
+    if i%n == 1:
+      gen_cnt = gen_cnt + 1
+      yield i
+
+for i in gen(100):
+  print i, gen_cnt
+```
+
+- we are dealing with (lazy) **stream**s, possibly of infinite length
+---
+# Extension To Infinite Structures
+- Streaming: Iteratee
+
+```haskell
+data Iteratee a = Done a | Next (Maybe Char &rightarrow; Iteratee a)
+```
+
+- We can **compose** them to make *new* stream
+
+    * the usual utilities: `map`, `filter`, `zip`, ...
+    * uses: HTTP request processing, ...
+
+```haskell
+-- http://okmij.org/ftp/Haskell/Iteratee/IterDemo1.hs
+countWS'_iter :: Monad m => Iteratee Char m Int
+countWS'_iter = id .| (en_filter isSpace) count_i
+
+run_countWSI' fname = print =<< run =<< enum_file fname countWS'_iter
+
+twsi' = run_countWSI' "/etc/motd"
+```
+---
+# Interpreters Everyday
+.small[
+```python
+C:\Users\suhorng\Desktop\Design Patterns GOF>python
+Python 2.7.3 (default, Apr 10 2012, 23:31:26) [MSC v.1500 32 bit (Intel)] on win
+32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 1+2
+3
+```
+```haskell
+C:\Users\suhorng\Desktop\Design Patterns GOF>ghci
+GHCi, version 7.4.2: http://www.haskell.org/ghc/  :? for help
+Loading package ghc-prim ... linking ... done.
+Loading package integer-gmp ... linking ... done.
+Loading package base ... linking ... done.
+Prelude> [ (a,b,c) | a <- [1..10], b <- [1..a], c <- [1..b], a^2 == b^2+c^2]
+[(5,4,3),(10,8,6)]
+```
+```cpp
+ROOT 5.34/12 (v5-34-12@v5-34-12, Nov 19 2013, 21:03:45 on win32)
+
+CINT/ROOT C/C++ Interpreter version 5.18.00, July 2, 2010
+Type ? for help. Commands must be C++ statements.
+Enclose multiple statements between { }.
+root [0] int x; x = 5; 1+x*2
+(const int)11
+```
+```scala
+Welcome to Scala version 2.10.1 (Java HotSpot(TM) Client VM, Java 1.7.0_17).
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> val f = (x:Int) => x*2
+f: Int => Int = <function1>
+```
+]
+---
+# Why Interpreters *Inside* a Language?
+- Goal: **Domain Specific Language**
+
+```haskell
+-- https://github.com/bos/llvm/blob/master/examples/Fibonacci.hs
+buildMod :: CodeGenModule Mod
+buildMod = do
+  -- Add two numbers in a cumbersome way.
+  plus <- createFunction InternalLinkage $ \ x y -> do
+    -- Create three additional basic blocks, need to be created ...
+    l1 <- newBasicBlock
+    l2 <- newBasicBlock
+    l3 <- newBasicBlock
+    -- Test if x is even/odd.
+    a <- and x (1 :: Word32)
+    c <- cmp CmpEQ a (0 :: Word32)
+    condBr c l1 l2
+    -- Do x+y if even.
+    defineBasicBlock l1
+    r1 <- add x y
+    br l3
+
+    {- ... -}
+
+    -- Join the two execution paths with a phi instruction.
+    r <- phi [(r1, l1), (r2, l2)]
+    ret r
+```
+---
+# Why Interpreters *Inside* a Language?
+- Goal: **Domain Specific Language**
+
+```haskell
+parseProgram :: String -> Either ParseError ASTree
+parseProgram = parse (spaces *> pprog <* eof) "AC2DCParser"
+
+pprog :: GenParser Char st ASTree
+pprog = Prog <$> pdcls <*> pstmts
+
+pdcls = Dcls <$> many ((,) FloatType <$> try (char 'f' *> skipMany1 space *> pid)
+                   <|> (,) IntType <$> try (char 'i' *> skipMany1 space *> pid))
+             <* spaces
+
+pstmts = Stmts <$> many (Print <$> try (char 'p' *> spaces *> pid)
+                     <|> Assign <$> pid <*> (char '=' *> spaces *> pexpr))
+               <* spaces
+
+pexpr = foldl makeExpr <$> pterm <*> many ((,) <$> (oneOf "+-" <* spaces) <*> pterm)
+
+pterm = foldl makeExpr <$> pval <*> many ((,) <$> (oneOf "*/" <* spaces) <*> pval)
+
+pval = (pnum <|> (ValRef <$> pid)) <* spaces
+
+pdigits = many1 (oneOf ['0'..'9']) <* spaces
+```
+---
+# Elements
+- Syntax
+
+    ``` haskell
+    e ::= x --variables
+        | &lambda;x. e -- anonymous function
+        | (e1 e2) -- function application
+    ```
+
+- Semantics
+
+    * $\beta$-reduction: $((\lambda x.\; e_1)\; e_2) \to e_1[e_2/x]$
+
+    * ($e_1[e_2/x]$ means *substitute* $e_2$ for $x$ in $e_1$)
+--
+
+    * Context of evaluation $\rho: \text{Variable}\to\text{Term}$
+
+    * In Object-Oriented settings, context can be passed to every `eval` function
+---
+# An Interpreter
+```haskell
+data Term = Var String
+          | Lam String Term
+          | Ap Term Term
+          | IntConst Int
+          deriving (Show)
+
+data Value = Closure (Value &rightarrow; Value)
+           | IntValue Int
+
+eval :: [(String, Value)] &rightarrow; Term &rightarrow; Value
+eval env (IntConst n) = IntValue n
+eval env (Var x) = val
+  where Just val = lookup x env
+eval env (Lam x e) = Closure (\val -> eval ((x,val):env) e)
+eval env (Ap e1 e2) =
+  case (eval env e1, eval env e2) of
+    (Closure fun, val) -> fun val
+    _ -> error "type error"
+```
+
+```haskell
+*Main> eval [] test1
+<fun> -- test1 = Lam "x" (Lam "y" (Var "x"))
+*Main> eval [] test2
+5     -- test2 = Ap (Ap test1 (IntConst 5)) (IntConst 8)
+*Main> eval [] test3
+<fun> -- test3 = Ap test1 (IntConst 7)
+*Main>
+```
+---
+# Implementation in C++
+- dynamically:
+
+    * using Composite pattern to encode recursive data type
+
+    * every class has an `eval` function from `Context` to `Value`
+
+- statically:
+
+    * template meta-programming
+---
+# Implementation in C++
+```cpp
+class Expr {
+public:
+  /* ... */
+  virtual ~Expr() {}
+  virtual shared_ptr<Value> eval(const Context<Value>&) const;
+};
+
+class Var : public Expr { /* override `eval` */ };
+class Lam : public Expr { /* override `eval` */ };
+class Ap  : public Expr { /* override `eval` */ };
+
+Expr* e =
+  new Ap(
+    new Lam("x", new Var("x")),
+    new Val(new IntValue(5)));
+shared_ptr<Value> v = e->eval({});
+```
+---
+# Surprising Uses
+- GNU Multiple Precision Arithmetic Library
+
+    * expression template
+
+    * works not quite smooth with C++1y, and we have **mutable** r-value references now
+
+- Boost$:\\!:$Spirit
+
+    * compile-time compilation
+---
+# On Dispatching
+- What we want
+<table cellspacing="0">
+  <thead>
+  </thead>
+  <tfoot></tfoot>
+  <tbody>
+    <tr><th></th><th>Var</th><th>Lam</th><th>Ap</th></tr>
+    <tr><td>toString</td><td></td><td></td><td></td></tr>
+    <tr><td>eval</td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+- Object-oriented: column major
+    * Var.toString, Lam.toString, Ap.toString, ...
+- functional programming: row major
+
+    * toString, eval, ...
+    </textarea>
+    <script src="./res/remark-0.5.4.min.js" type="text/javascript"></script>
+    <script src="./res/highlight.pack.js"></script>
+    <script type="text/javascript">
+      /* override default hljs engine to provide Haskell syntax highlight */
+      remark.highlighter.engine = hljs;
+      var slideshow = remark.create({
+        highlightStyle: 'ir_black'
+      });
+      MathJax.Hub.Config({
+        "HTML-CSS": { scale: 75 },
+        tex2jax: {
+          skipTags: ['code', 'script', 'noscript', 'style' ,'textarea', 'pre'],
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      });
+      MathJax.Hub.Configured();
+    </script>
+    <div class="remark-notes-area">hello world</div>
+</body></html>
